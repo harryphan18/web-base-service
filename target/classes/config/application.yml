@@ -1,0 +1,105 @@
+# ===================================================================
+# Spring Boot configuration for the "prod" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# More information on profiles: https://www.jhipster.tech/profiles/
+# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+logging:
+  file:
+    name: ./logs/api_auth.log
+  level:
+    ROOT: error
+    io.github.jhipster: INFO
+    com.huypq.web: debug
+
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: false
+
+spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/auth?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: root
+    password: 12345678
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 9964
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024
+
+jhipster:
+  http:
+    cache: # Used by the CachingHttpHeadersFilter
+      timeToLiveInDays: 1461
+  cache: # Cache configuration
+    infinispan:
+      config-file: default-configs/default-jgroups-tcp.xml
+      statsEnabled: true
+      # local app cache
+      local:
+        time-to-live-seconds: 3600 # By default objects stay 1 hour (in seconds) in the cache
+        max-entries: 1000 # Number of objects in each cache entry
+      # distributed app cache
+      distributed:
+        time-to-live-seconds: 3600 # By default objects stay 1 hour (in seconds) in the cache
+        max-entries: 1000 # Number of objects in each cache entry
+        instance-count: 2
+      # replicated app cache
+      replicated:
+        time-to-live-seconds: 3600 # By default objects stay 1 hour (in seconds) in the cache
+        max-entries: 1000 # Number of objects in each cache entry
+  security:
+    client-authorization:
+      client-id: internal
+      client-secret: internal
+    authentication:
+      jwt:
+        # Access Token is valid for 5 mins
+        token-validity-in-seconds: 300
+        # Refresh Token is valid for 7 days
+        token-validity-in-seconds-for-remember-me: 252000
+uaa:
+  key-store:
+    name: config/tls/keystore.p12
+    password: password
+    alias: selfsigned
+  web-client-configuration:
+    # Access Token is valid for 5 mins
+    access-token-validity-in-seconds: 300
+    # Refresh Token is valid for 7 days
+    refresh-token-validity-in-seconds-for-remember-me: 604800
+    #change client secret in production, keep in sync with gateway configuration
+    client-id: web_app
+    secret: changeit

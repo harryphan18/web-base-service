@@ -1,0 +1,34 @@
+{
+  "groups": [
+    {
+      "name": "application",
+      "type": "com.huypq.web.admin.config.ApplicationProperties",
+      "sourceType": "com.huypq.web.admin.config.ApplicationProperties"
+    },
+    {
+      "name": "spring.datasource.hikari",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.huypq.web.admin.config.CloudDatabaseConfiguration",
+      "sourceMethod": "dataSource()"
+    },
+    {
+      "name": "uaa",
+      "type": "com.huypq.web.admin.config.UaaProperties",
+      "sourceType": "com.huypq.web.admin.config.UaaProperties"
+    },
+    {
+      "name": "uaa.key-store",
+      "type": "com.huypq.web.admin.config.UaaProperties$KeyStore",
+      "sourceType": "com.huypq.web.admin.config.UaaProperties",
+      "sourceMethod": "getKeyStore()"
+    },
+    {
+      "name": "uaa.web-client-configuration",
+      "type": "com.huypq.web.admin.config.UaaProperties$WebClientConfiguration",
+      "sourceType": "com.huypq.web.admin.config.UaaProperties",
+      "sourceMethod": "getWebClientConfiguration()"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}
